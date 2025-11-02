@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laporan Rahasia — SUARA KITA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #003366, #0099ff);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      margin-bottom: 10px;
+      color: #ffdd57;
+    }
+
+    header p {
+      color: #cce7ff;
+      font-size: 1.1em;
+    }
+
+    .container {
+      width: 85%;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 50px auto;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .container h2 {
+      text-align: center;
+      color: #ffdd57;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
+    textarea, select, input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1em;
+      font-family: "Poppins", sans-serif;
+      background: rgba(255, 255, 255, 0.8);
+      color: #003366;
+      resize: vertical;
+    }
+
+    textarea:focus, input:focus {
+      border: 2px solid #00bfff;
+    }
+
+    button {
+      margin-top: 30px;
+      background: #00bfff;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #007acc;
+    }
+
+    .note {
+      font-size: 0.9em;
+      color: #cce7ff;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      margin: 40px auto 0;
+      background: #ffdd57;
+      color: #003366;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      width: fit-content;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #ffe680;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 0.9em;
+      background: rgba(0, 0, 0, 0.25);
+      color: #cce7ff;
+      margin-top: 40px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🕊️ Laporan Rahasia SUARA KITA 🕊️</h1>
+    <p>Laporkan perundungan, kekerasan, atau masalah di lingkungan sekolah secara aman dan anonim.</p>
+  </header>
+
+  <div class="container">
+    <h2>Formulir Laporan Anonim</h2>
+    <form id="laporanForm" onsubmit="return kirimLaporan(event)">
+      <label for="kategori">Kategori Masalah</label>
+      <select id="kategori" required>
+        <option value="">Pilih kategori...</option>
+        <option>Bullying / Perundungan</option>
+        <option>Kekerasan Verbal / Fisik</option>
+        <option>Masalah Guru / Siswa</option>
+        <option>Masalah Organisasi / Ekstrakurikuler</option>
+        <option>Lainnya</option>
+      </select>
+
+      <label for="laporan">Isi Laporan (tanpa menyebut nama jika ingin anonim)</label>
+      <textarea id="laporan" rows="6" placeholder="Tuliskan dengan jujur dan jelas..." required></textarea>
+
+      <label for="bukti">Tambahkan Bukti (opsional, bisa link gambar/video)</label>
+      <input type="url" id="bukti" placeholder="https://contoh.com/bukti.jpg" />
+
+      <button type="submit">Kirim Laporan Rahasia 🔒</button>
+      <p class="note">Laporan ini bersifat *anonim* dan hanya dapat diakses oleh pihak MPK yang berwenang.</p>
+    </form>
+  </div>
+
+  <a href="admin SUARA KITA.html" class="back-btn">🔐 Panel Admin</a>
+
+  <footer>
+  <p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p>
+  </footer>
+
+  <script>
+    function kirimLaporan(e) {
+      e.preventDefault();
+      const kategori = document.getElementById("kategori").value;
+      const laporan = document.getElementById("laporan").value;
+      const bukti = document.getElementById("bukti").value;
+
+      // Ambil data lama
+      const data = JSON.parse(localStorage.getItem("aspirasi")) || [];
+
+      // Buat data baru (anonim)
+      const laporanBaru = {
+        id: Date.now(),
+        nama: "Anonim",
+        kelas: "-",
+        jenis: kategori,
+        isi: laporan + (bukti ? `\n📎 Bukti: ${bukti}` : ""),
+        status: "Pending"
+      };
+
+      data.push(laporanBaru);
+      localStorage.setItem("aspirasi", JSON.stringify(data));
+
+      alert("✅ Terima kasih atas laporan Anda.\nPesan ini telah tersimpan secara rahasia untuk ditinjau MPK.");
+      document.getElementById("laporanForm").reset();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang MPK | SUARA KITA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 60%, #2563eb 100%);
+      color: white;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 50px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      position: fixed; top: 0; left: 0; z-index: 100;
+    }
+
+    header h1 {
+      font-size: 1.7rem; color: #FACC15;
+      display: flex; align-items: center; gap: 10px;
+      text-shadow: 0 0 10px rgba(250,204,21,0.6);
+    }
+
+    header a {
+      text-decoration: none;
+      background: #FACC15;
+      color: #1E3A8A;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    header a:hover {
+      background: #FFE55E; transform: scale(1.05);
+    }
+
+    main {
+      margin-top: 120px;
+      width: 90%; max-width: 1200px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 25px;
+      padding: 50px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      animation: fadeIn 1.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #FACC15;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(250,204,21,0.7);
+    }
+
+    .kabinet {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #E0E7FF;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+      text-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
+    .desc {
+      text-align: center;
+      color: #E0E7FF;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .info-section {
+      background: rgba(255,255,255,0.12);
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 50px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      color: #E0E7FF;
+    }
+
+    .info-section h3 {
+      color: #FACC15;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px rgba(250,204,21,0.6);
+    }
+
+    .struktur {
+      display: grid;
+      gap: 35px;
+    }
+
+    .section-title {
+      background: linear-gradient(90deg, #1E40AF, #2563EB);
+      padding: 12px 20px;
+      border-radius: 15px;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      transition: 0.3s;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      background: rgba(255,255,255,0.25);
+    }
+
+    .card i {
+      font-size: 2rem;
+      color: #FACC15;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #E0E7FF;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      font-size: 0.9rem;
+      padding-bottom: 20px;
+    }
+
+    .back-button {
+      display: block;
+      margin: 50px auto 0;
+      background: linear-gradient(90deg, #2563EB, #1E3A8A);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(37,99,235,0.4);
+    }
+
+    .back-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #1E40AF, #1E3A8A);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><i class="fa-solid fa-users"></i> MPK SMAN 1 Barru</h1>
+    <a href="tampilan awal SUARA KITA.html">Kembali ke Awal</a>
+  </header>
+
+  <main>
+    <h2>✨ Struktur Organisasi MPK SMAN 1 Barru</h2>
+    <p class="kabinet">Kabinet Adhyswara</p>
+
+    <p class="desc">
+      MPK SMAN 1 Barru adalah wadah representatif seluruh siswa dalam menyampaikan aspirasi, ide, serta pengawasan kegiatan sekolah.
+      Kami hadir dengan semangat kolaborasi, kepemimpinan, dan tanggung jawab untuk mewujudkan lingkungan sekolah yang harmonis dan aktif.
+    </p>
+
+    <div class="info-section">
+      <h3>🔎 Tentang MPK SMAN 1 Barru</h3>
+      <p>
+        <b>Majelis Perwakilan Kelas (MPK)</b> merupakan organisasi legislatif siswa yang berdiri sebagai jembatan antara pihak siswa, OSIS, dan sekolah.  
+        MPK memiliki fungsi utama dalam <b>pengawasan, legislasi, dan penyaluran aspirasi</b> seluruh siswa.  
+        Di SMAN 1 Barru, MPK menjadi wadah yang menumbuhkan <b>kritis, partisipatif, dan tanggung jawab sosial</b> pada setiap anggotanya.
+      </p>
+      <p>
+        Dengan slogan <b>“SATU SUARA, MENYINARI PERUBAHAN.”</b>, MPK SMAN 1 Barru berkomitmen menjadi mitra siswa dan sekolah dalam menciptakan lingkungan belajar yang nyaman, transparan, dan penuh inovasi.
+      </p>
+    </div>
+
+    <!-- STRUKTUR -->
+    <div class="struktur">
+
+      <!-- INTI -->
+      <div>
+        <div class="section-title">🌟 Pengurus Inti</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-crown"></i><h3>Ketua</h3><p>Muh. Rayfhanul Arnas</p></div>
+          <div class="card"><i class="fa-solid fa-star"></i><h3>Wakil Ketua</h3><p>Nofal Fauzan Pratama</p></div>
+          <div class="card"><i class="fa-solid fa-pen-nib"></i><h3>Sekretaris</h3><p>Andi. Muh. Dzaki Al Fattah</p></div>
+          <div class="card"><i class="fa-solid fa-book-open"></i><h3>Wakil Sekretaris</h3><p>Alisha Zaafarani</p></div>
+          <div class="card"><i class="fa-solid fa-coins"></i><h3>Bendahara</h3><p>Nadifah Jinan Ulya</p></div>
+          <div class="card"><i class="fa-solid fa-wallet"></i><h3>Wakil Bendahara</h3><p>Zahidah</p></div>
+        </div>
+      </div>
+
+      <!-- KOMISI I -->
+      <div>
+        <div class="section-title">⚖️ Komisi I — AD/ART</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-gavel"></i><h3>Kordinator</h3><p>Ence Faezar Ashari</p></div>
+          <div class="card"><h3>Anggota</h3><p>Muh. Fiqri Fathir<br>Fadlan Arraiyah<br>Ashyla Sry Rofifah<br>Naurah Afifah Arsis</p></div>
+        </div>
+      </div>
+
+      <!-- KOMISI II -->
+      <div>
+        <div class="section-title">🎯 Komisi II — Pengawasan Ekstrakurikuler</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-eye"></i><h3>Kordinator</h3><p>Sulpikar</p></div>
+          <div class="card"><h3>Anggota</h3><p>Ahmad Farel<br>Rifan Saputra<br>Muh. Adid Mahesa<br>Muh. Liswa Kaudry<br>Muh. Wahyu Arafah</p></div>
+        </div>
+      </div>
+
+      <!-- KOMISI III -->
+      <div>
+        <div class="section-title">💬 Komisi III — Aspirasi</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-microphone"></i><h3>Kordinator</h3><p>Muh. Fathir Radhiatma</p></div>
+          <div class="card"><h3>Anggota</h3><p>Nurhidayah<br>Azzah Awaliyah Ramadani F.<br>Raihana Ummul Afifah<br>Muh. Pausan</p></div>
+        </div>
+      </div>
+
+      <!-- KOMISI IV -->
+      <div>
+        <div class="section-title">📢 Komisi IV — Hubungan Masyarakat (Humas)</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-handshake"></i><h3>Kordinator</h3><p>Muh. Mahesa Arafah</p></div>
+          <div class="card"><h3>Anggota</h3><p>Putri Alylatulbariza<br>Maulida Zahra Kiani<br>Dzaky Pratama Erwin<br>Nurhaliza Mursalin<br>Aqilah Zainal</p></div>
+        </div>
+      </div>
+
+      <!-- KOMISI V -->
+      <div>
+        <div class="section-title">🌱 Komisi V — Sosial & Lingkungan</div>
+        <div class="grid">
+          <div class="card"><i class="fa-solid fa-leaf"></i><h3>Kordinator</h3><p>Muhammad Rehan</p></div>
+          <div class="card"><h3>Anggota</h3><p>Aqilah Alisha<br>Aiman<br>Nurul Fadillah A.<br>Opy Damrhana Adra Muntu<br>Andi Muh. Abyaz F.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="back-button" onclick="goBack()">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Website Awal
+    </button>
+  </main>
+
+  <footer>
+    <p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p>
+  </footer>
+
+  <script>
+    function goBack() {
+      window.location.href = "tampilan awal SUARA KITA.html";
+    }
+  </script>
+
+</body>
+</html>

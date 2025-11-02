@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kirim Aspirasi | SUARA KITA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #3B82F6, #1E3A8A);
+      min-height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      padding: 40px 20px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #FACC15;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+    }
+
+    .back-button {
+      background: linear-gradient(90deg, #2563EB, #1E3A8A);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #FACC15;
+      padding: 12px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(37,99,235,0.6), inset 0 0 5px rgba(255,255,255,0.2);
+      animation: pulse 2.5s infinite;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 20px #60A5FA, 0 0 30px #FACC15;
+      color: white;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px rgba(96,165,250,0.5); }
+      50% { box-shadow: 0 0 20px rgba(250,204,21,0.7), 0 0 40px rgba(96,165,250,0.4); }
+      100% { box-shadow: 0 0 10px rgba(96,165,250,0.5); }
+    }
+
+    .admin-btn {
+      position: absolute;
+      right: 25px;
+      top: 25px;
+      background: #FACC15;
+      color: #1E3A8A;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .admin-btn:hover {
+      background: #FFE55E;
+      transform: scale(1.05);
+    }
+
+    main {
+      margin-top: 180px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      backdrop-filter: blur(15px);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #FACC15;
+      font-size: 1.8rem;
+      text-shadow: 0 0 10px rgba(250,204,21,0.4);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #E0E7FF;
+    }
+
+    input, select, textarea {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.9);
+      color: #1E3A8A;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 10px #FACC15;
+      transform: scale(1.02);
+    }
+
+    textarea { resize: none; height: 120px; }
+
+    button[type="submit"] {
+      background: linear-gradient(90deg, #2563EB, #1E3A8A);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(37,99,235,0.4);
+    }
+
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #1E40AF, #1E3A8A);
+      transform: scale(1.05);
+    }
+
+    .success-msg {
+      display: none;
+      background: rgba(22,163,74,0.9);
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9em;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><i class="fa-solid fa-pen-to-square"></i> Kirim Aspirasi</h1>
+
+    <button class="back-button" onclick="goBack()">
+      <i class="fas fa-arrow-left"></i> Kembali ke Website Awal
+    </button>
+
+    <a href="admin SUARA KITA.html" class="admin-btn">
+      <i class="fa-solid fa-user-shield"></i> Admin
+    </a>
+  </header>
+
+  <main>
+    <h2>Sampaikan Aspirasimu</h2>
+    <form id="aspirasiForm">
+      
+      <label for="nama">Nama (boleh anonim):</label>
+      <input type="text" id="nama" placeholder="Anonim atau nama lengkap" />
+
+      <label for="kelas">Kelas:</label>
+      <select id="kelas" required>
+        <option value="">-- Pilih Kelas --</option>
+        <option value="X.E1">X.E1</option>
+        <option value="X.E2">X.E2</option>
+        <option value="X.E3">X.E3</option>
+        <option value="X.E4">X.E4</option>
+        <option value="X.E5">X.E5</option>
+        <option value="X.E6">X.E6</option>
+        <option value="X.E7">X.E7</option>
+        <option value="X.E8">X.E8</option>
+        <option value="X.E9">X.E9</option>
+        <option value="X.E10">X.E10</option>
+        <option value="X.E11">X.E11</option>
+        <option value="XI.F1">XI.F1</option>
+        <option value="XI.F2">XI.F2</option>
+        <option value="XI.F3">XI.F3</option>
+        <option value="XI.F4">XI.F4</option>
+        <option value="XI.F5">XI.F5</option>
+        <option value="XI.F6">XI.F6</option>
+        <option value="XI.F7">XI.F7</option>
+        <option value="XI.F8">XI.F8</option>
+        <option value="XI.F9">XI.F9</option>
+        <option value="XI.F10">XI.F10</option>
+        <option value="XI.F11">XI.F11</option>
+        <option value="XI.F12">XI.F12</option>
+        <option value="XII.F1">XII.F1</option>
+        <option value="XII.F2">XII.F2</option>
+        <option value="XII.F3">XII.F3</option>
+        <option value="XII.F4">XII.F4</option>
+        <option value="XII.F5">XII.F5</option>
+        <option value="XII.F6">XII.F6</option>
+        <option value="XII.F7">XII.F7</option>
+        <option value="XII.F8">XII.F8</option>
+        <option value="XII.F9">XII.F9</option>
+        <option value="XII.F10">XII.F10</option>
+        <option value="XII.F11">XII.F11</option>
+        <option value="XII.F12">XII.F12</option>
+      </select>
+
+      <label for="jenis">Jenis Aspirasi:</label>
+      <select id="jenis" required>
+        <option value="">-- Pilih Jenis Aspirasi --</option>
+        <option value="Sarana">Sarana & Prasarana</option>
+        <option value="Kegiatan">Kegiatan Sekolah</option>
+        <option value="Kebijakan">Kebijakan Sekolah</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
+
+      <label for="isi">Isi Aspirasi:</label>
+      <textarea id="isi" placeholder="Tulis pendapat, saran, atau keluhanmu di sini..." required></textarea>
+
+      <button type="submit"><i class="fa-solid fa-paper-plane"></i> Kirim Sekarang</button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      ✅ Terima kasih! Aspirasi kamu sudah diterima oleh MPK.
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("aspirasiForm");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nama = document.getElementById("nama").value.trim() || "Anonim";
+      const kelas = document.getElementById("kelas").value;
+      const jenis = document.getElementById("jenis").value;
+      const isi = document.getElementById("isi").value.trim();
+
+      const data = JSON.parse(localStorage.getItem("aspirasi")) || [];
+
+      const newAsp = {
+        id: Date.now(),
+        nama,
+        kelas,
+        jenis,
+        isi,
+        status: "Pending"
+      };
+
+      data.push(newAsp);
+      localStorage.setItem("aspirasi", JSON.stringify(data));
+
+      successMsg.style.display = "block";
+      form.reset();
+
+      setTimeout(() => {
+        successMsg.style.display = "none";
+      }, 3000);
+    });
+
+    function goBack() {
+      window.location.href = "tampilan awal SUARA KITA.html";
+    }
+  </script>
+
+</body>
+</html>

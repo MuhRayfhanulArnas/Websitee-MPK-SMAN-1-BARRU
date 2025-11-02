@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUARA KITA - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    
+    body {
+      background: linear-gradient(135deg, #3B82F6, #1E3A8A);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: 0.4s ease;
+    }
+
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 30px 0;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #FACC15;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1em;
+      color: #E0E7FF;
+    }
+
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    .menu-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: 0.3s;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .menu-card i {
+      font-size: 2em;
+      margin-bottom: 15px;
+      color: #FACC15;
+    }
+
+    .menu-card h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .menu-card p {
+      font-size: 0.9em;
+      color: #E0E7FF;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #E0E7FF;
+      font-size: 0.9em;
+      background: rgba(255,255,255,0.05);
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Mode Gelap */
+    .dark {
+      background: linear-gradient(135deg, #0F172A, #1E293B);
+    }
+
+    .dark header, .dark footer {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .dark .menu-card {
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Tombol */
+    .top-buttons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.2);
+      color: #FACC15;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9em;
+      backdrop-filter: blur(5px);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SUARA KITA</h1>
+    <p>Portal Aspirasi & Inspirasi Siswa SMAN 1 Barru</p>
+  </header>
+
+  <div class="top-buttons">
+    <button class="btn" onclick="toggleMode()"><i class="fas fa-moon"></i></button>
+    <button class="btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+  </div>
+
+  <section class="menu-container">
+    <div class="menu-card" onclick="go('aspirasi SUARA KITA.html')">
+      <i class="fas fa-paper-plane"></i>
+      <h3>Kirim Aspirasi</h3>
+      <p>Sampaikan ide, saran, atau kritik kamu di sini.</p>
+    </div> 
+
+    <div class="menu-card" onclick="go('suara terkini SUARA KITA.html')">
+      <i class="fas fa-comments"></i>
+      <h3>Suara Terkini</h3>
+      <p>Lihat aspirasi terbaru dari teman-temanmu.</p>
+    </div>
+
+    <div class="menu-card" onclick="go('tentang mpk SUARA KITA.html')">
+      <i class="fas fa-users"></i>
+      <h3>Tentang MPK</h3>
+      <p>Kenali lebih dekat visi & kegiatan MPK SMAN 1 Barru.</p>
+    </div>
+
+    <div class="menu-card" onclick="go('kegiatan sekolah SUARA KITA.html')">
+      <i class="fas fa-calendar-alt"></i>
+      <h3>Kegiatan Sekolah</h3>
+      <p>Ikuti informasi kegiatan sekolah terbaru.</p>
+    </div>
+
+    <div class="menu-card" onclick="go('laporan rahasia SUARA KITA.html')">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h3>Laporan Rahasia</h3>
+      <p>Lapor masalah atau bullying secara aman dan anonim.</p>
+    </div>
+
+    <div class="menu-card" onclick="go('admin SUARA KITA.html')">
+      <i class="fas fa-tools"></i>
+      <h3>Portal Admin</h3>
+      <p>Akses khusus MPK untuk kelola aspirasi siswa.</p>
+    </div>
+  </section>
+
+  <footer><p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p></footer>
+
+  <script>
+    // Navigasi
+    function go(page) {
+      window.location.href = page;
+    }
+
+    // Logout
+    function logout() {
+      alert("Anda telah keluar dari SUARA KITA.");
+      window.location.href = "tampilan awal SUARA KITA.html";
+    }
+
+    // Mode Gelap
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("modeGelap", isDark);
+    }
+
+    // Simpan preferensi mode
+    window.onload = () => {
+      const mode = localStorage.getItem("modeGelap");
+      if (mode === "true") document.body.classList.add("dark");
+    };
+  </script>
+</body>
+</html>
