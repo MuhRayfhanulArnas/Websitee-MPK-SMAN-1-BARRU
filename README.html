@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUARA KITA - Selamat Datang</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at center, #3B82F6, #1E3A8A 80%);
+      overflow: hidden;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 2;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    h1 {
+      font-size: 3.2em;
+      letter-spacing: 2px;
+      color: #FACC15;
+      margin-bottom: 15px;
+      animation: slideDown 1.5s ease;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #E0E7FF;
+      margin-bottom: 40px;
+      animation: fadeIn 2.5s ease;
+    }
+
+    button {
+      background-color: #FACC15;
+      color: #1E3A8A;
+      border: none;
+      padding: 15px 45px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      animation: popUp 2.5s ease;
+      z-index: 2;
+    }
+
+    button:hover {
+      transform: scale(1.07);
+      background-color: #FFE04D;
+    }
+
+    .admin-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 25px;
+      background: rgba(255,255,255,0.2);
+      color: #FACC15;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: 0.3s ease;
+      backdrop-filter: blur(5px);
+      z-index: 2;
+    }
+
+    .admin-btn:hover {
+      background: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9em;
+      color: #E0E7FF;
+      opacity: 0.8;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <div class="container">
+    <h1>SUARA KITA</h1>
+    <p>Aspirasi Siswa SMAN 1 Barru<br>Oleh MPK SMAN 1 Barru</p>
+    <button onclick="masuk()">Masuk ke Website</button>
+  </div>
+
+  <button class="admin-btn" onclick="loginAdmin()">Login Admin</button>
+
+  <footer><p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p></footer>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_0a8f9a6b91.mp3?filename=calm-mind-ambient-11095.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    // 🎵 Musik otomatis
+    document.addEventListener("click", () => {
+      const music = document.getElementById("bgMusic");
+      music.play();
+    }, { once: true });
+
+    // 🌌 Efek Partikel
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    class Particle {
+      constructor(x, y, size, speedX, speedY) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = "rgba(255,255,255,0.4)";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 50; i++) {
+        const size = Math.random() * 3;
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const speedX = (Math.random() - 0.5) * 0.5;
+        const speedY = (Math.random() - 0.5) * 0.5;
+        particles.push(new Particle(x, y, size, speedX, speedY));
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    // Responsif ukuran
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    // Tombol Masuk
+    function masuk() {
+      window.location.href = "login SUARA KITA.html"; // arahkan ke halaman utama
+    }
+
+    // Tombol Admin
+    function loginAdmin() {
+      const pass = prompt("Masukkan password admin:");
+      if (pass === "mpk2025") {
+        alert("✅ Login berhasil! Mengarahkan ke halaman admin...");
+        window.location.href = "admin SUARA KITA.html#adminPanel";
+      } else {
+        alert("❌ Password salah!");
+      }
+    }
+  </script>
+</body>
+</html>
