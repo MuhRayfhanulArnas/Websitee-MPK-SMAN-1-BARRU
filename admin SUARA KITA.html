@@ -1,338 +1,243 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel - SUARA KITA</title>
-  <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - SUARA KITA</title>
+<style>
+  /* ===== Reset & Font ===== */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
 
-    body {
-      background: linear-gradient(135deg, #1E3A8A, #3B82F6);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 15px;
-    }
+  body {
+    background: linear-gradient(135deg,#1E3A8A,#3B82F6);
+    display:flex; justify-content:center; align-items:center;
+    min-height:100vh; color:#fff;
+  }
 
-    header {
-      text-align: center;
-      margin-bottom: 25px;
-      padding: 0 10px;
-    }
+  /* ===== Login Page ===== */
+  #loginBox {
+    background: rgba(255,255,255,0.1);
+    padding:50px 60px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    width:320px;
+    transition:0.3s;
+  }
 
-    header h1 {
-      color: #FACC15;
-      font-size: 2em;
-    }
+  #loginBox h1 {
+    font-size:2em; color:#FACC15; margin-bottom:25px;
+    letter-spacing:1px;
+  }
 
-    header p {
-      color: #E0E7FF;
-      font-size: 1em;
-    }
+  #loginBox input {
+    width:100%; padding:14px; border-radius:12px; border:none;
+    margin:12px 0; text-align:center; font-size:1em;
+    transition:0.2s;
+  }
 
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
-    }
+  #loginBox input:focus { outline:none; box-shadow:0 0 8px #FACC15; }
 
-    .stat-box {
-      background: rgba(255,255,255,0.15);
-      border-radius: 15px;
-      padding: 15px 20px;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      min-width: 120px;
-      flex: 1 1 120px;
-    }
+  #loginBox button {
+    width:100%; padding:14px; border:none; border-radius:25px;
+    background:#FACC15; color:#1E3A8A; font-weight:bold;
+    font-size:1em; cursor:pointer; margin-top:15px;
+    transition:0.3s;
+  }
 
-    .stat-box h2 {
-      color: #FACC15;
-      margin-bottom: 5px;
-      font-size: 1.5em;
-    }
+  #loginBox button:hover { background:#EAB308; }
 
-    .stat-box p {
-      color: #E0E7FF;
-      font-size: 0.9em;
-    }
+  /* ===== Admin Panel ===== */
+  #adminPanel {
+    display:none; width:95%; height:90vh; border-radius:20px;
+    overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    display:flex; background: rgba(255,255,255,0.05);
+  }
 
-    table {
-      width: 100%;
-      max-width: 900px;
-      border-collapse: collapse;
-      background: rgba(255,255,255,0.1);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px);
-      margin-bottom: 20px;
-    }
+  /* Sidebar kiri */
+  .sidebar {
+    width:30%; background: rgba(255,255,255,0.08);
+    display:flex; flex-direction:column; border-right:1px solid rgba(255,255,255,0.2);
+  }
+  .sidebar-header {
+    padding:20px; text-align:center; font-weight:bold;
+    color:#FACC15; font-size:1.2em; background: rgba(255,255,255,0.1);
+  }
+  .chat-list { flex:1; overflow-y:auto; }
+  .chat-item {
+    padding:15px 20px; cursor:pointer; border-left:3px solid transparent;
+    transition:0.3s;
+  }
+  .chat-item:hover { background: rgba(255,255,255,0.1); border-left:3px solid #FACC15; }
+  .chat-item.active { background: rgba(250,204,21,0.2); border-left:3px solid #FACC15; }
+  .chat-item h4 { font-size:1em; color:#FACC15; }
+  .chat-item p { font-size:0.85em; color:#E0E7FF; margin-top:5px; }
 
-    th, td {
-      padding: 10px 12px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      font-size: 0.9em;
-      word-break: break-word;
-    }
+  /* Konten kanan */
+  .main {
+    flex:1; display:flex; flex-direction:column;
+  }
+  .main-header {
+    padding:15px 25px; background: rgba(255,255,255,0.1);
+    display:flex; justify-content:space-between; align-items:center; font-size:1.1em;
+  }
+  .main-header button {
+    background:#FACC15; color:#1E3A8A; border:none; border-radius:12px; padding:6px 14px;
+    font-weight:bold; cursor:pointer; transition:0.3s;
+  }
+  .main-header button:hover { background:#EAB308; }
 
-    th {
-      background-color: rgba(255,255,255,0.15);
-      color: #FACC15;
-      font-size: 1em;
-    }
+  .main-body {
+    flex:1; padding:25px; overflow-y:auto;
+    background: rgba(255,255,255,0.03); border-top:1px solid rgba(255,255,255,0.1);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .main-body p { margin:12px 0; line-height:1.6; }
 
-    tr:hover {
-      background-color: rgba(255,255,255,0.1);
-    }
+  .main-footer {
+    padding:15px 25px; text-align:right; background: rgba(255,255,255,0.08);
+  }
+  .main-footer button {
+    margin-left:10px; padding:8px 18px; border:none; border-radius:12px; font-weight:bold; cursor:pointer;
+  }
+  .approve { background:#22C55E; color:#fff; }
+  .reject { background:#EF4444; color:#fff; }
+  .delete { background:#6B7280; color:#fff; }
+  .approve:hover { background:#16A34A; }
+  .reject:hover { background:#DC2626; }
+  .delete:hover { background:#4B5563; }
 
-    .actions button {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin: 3px 0;
-      font-weight: 600;
-      transition: 0.3s;
-      font-size: 0.85em;
-    }
+  .placeholder { text-align:center; margin-top:50px; color:#E0E7FF; opacity:0.7; font-size:1em; }
 
-    .approve { background-color: #22C55E; color: #fff; }
-    .reject { background-color: #EF4444; color: #fff; }
-    .delete { background-color: #6B7280; color: #fff; }
-
-    .approve:hover { background-color: #16A34A; }
-    .reject:hover { background-color: #DC2626; }
-    .delete:hover { background-color: #4B5563; }
-
-    .back-btn {
-      margin-top: 15px;
-      background-color: #FACC15;
-      color: #1E3A8A;
-      padding: 10px 25px;
-      border-radius: 25px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 0.95em;
-    }
-
-    .back-btn:hover {
-      transform: scale(1.05);
-      background-color: #FFE04D;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #E0E7FF;
-      font-size: 0.85em;
-      opacity: 0.8;
-    }
-
-    .hidden { display: none; }
-
-    .login-box {
-      background: rgba(255,255,255,0.1);
-      padding: 25px 35px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      backdrop-filter: blur(8px);
-      max-width: 320px;
-      width: 100%;
-    }
-
-    .login-box h3 {
-      margin-bottom: 10px;
-      color: #FACC15;
-    }
-
-    .login-box input {
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .login-box button {
-      background-color: #FACC15;
-      color: #1E3A8A;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 25px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .login-box button:hover {
-      background-color: #FFE04D;
-    }
-
-    /* RESPONSIVE TABLE */
-    @media (max-width: 768px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-
-      thead {
-        display: none;
-      }
-
-      tr {
-        margin-bottom: 15px;
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 10px;
-        padding: 10px;
-        background: rgba(255,255,255,0.05);
-      }
-
-      td {
-        border: none;
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.9em;
-        padding: 8px 5px;
-      }
-
-      td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #FACC15;
-      }
-
-      .actions {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-        flex-wrap: wrap;
-      }
-
-      .actions button {
-        flex: 1 1 30%;
-      }
-    }
-  </style>
+  @media(max-width:768px){
+    #adminPanel { flex-direction:column; height:95vh; }
+    .sidebar { width:100%; height:200px; border-right:none; border-bottom:1px solid rgba(255,255,255,0.2);}
+    .main { flex:1; }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Panel Admin - SUARA KITA</h1>
-    <p>Kelola aspirasi siswa SMAN 1 Barru</p>
-  </header>
 
-  <!-- LOGIN FORM -->
-  <div id="login" class="login-box">
-    <h3>Login Admin</h3>
-    <input type="password" id="password" placeholder="Masukkan password">
-    <br>
-    <button onclick="login()">Masuk</button>
+<!-- ===== Halaman Login ===== -->
+<div id="loginBox">
+  <h1>Login Admin</h1>
+  <input type="password" id="password" placeholder="Masukkan password admin">
+  <button onclick="login()">Masuk</button>
+</div>
+
+<!-- ===== Panel Admin Setelah Login ===== -->
+<div id="adminPanel">
+  <!-- Sidebar kiri -->
+  <div class="sidebar">
+    <div class="sidebar-header">📋 Daftar Aspirasi</div>
+    <div id="chatList" class="chat-list"></div>
   </div>
 
-  <!-- ADMIN CONTENT -->
-  <div id="adminContent" class="hidden">
-    <div class="stats">
-      <div class="stat-box"><h2 id="total">0</h2><p>Total Aspirasi</p></div>
-      <div class="stat-box"><h2 id="approved">0</h2><p>Disetujui</p></div>
-      <div class="stat-box"><h2 id="rejected">0</h2><p>Ditolak</p></div>
-      <div class="stat-box"><h2 id="pending">0</h2><p>Pending</p></div>
+  <!-- Konten kanan -->
+  <div class="main">
+    <div class="main-header">
+      <span id="judulAspirasi">Pilih Aspirasi</span>
+      <div>
+        <button onclick="logout()">Logout</button>
+        <button onclick="window.location.href='tampilan awal SUARA KITA.html'">🏠 Halaman Utama</button>
+      </div>
     </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nama</th>
-          <th>Kelas</th>
-          <th>Jenis</th>
-          <th>Aspirasi</th>
-          <th>Status</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
-
-    <button class="back-btn" onclick="window.location.href='tampilan awal SUARA KITA.html'">⬅ Kembali ke Website</button>
+    <div class="main-body" id="detailBody">
+      <p class="placeholder">Klik salah satu aspirasi untuk melihat detailnya.</p>
+    </div>
+    <div class="main-footer" id="actionButtons" style="display:none;">
+      <button class="approve" onclick="ubahStatus('Approved')">Setujui</button>
+      <button class="reject" onclick="ubahStatus('Rejected')">Tolak</button>
+      <button class="delete" onclick="hapus()">Hapus</button>
+    </div>
   </div>
+</div>
 
-  <footer><p>© 2025 <span>MPK SMA Negeri 1 Barru</span> | Kabinet Adhyswara</p></footer>
+<script>
+const loginBox = document.getElementById("loginBox");
+const adminPanel = document.getElementById("adminPanel");
+const passwordInput = document.getElementById("password");
+const chatList = document.getElementById("chatList");
+const detailBody = document.getElementById("detailBody");
+const actionButtons = document.getElementById("actionButtons");
+const judulAspirasi = document.getElementById("judulAspirasi");
+let selectedId = null;
 
-  <script>
-    const loginBox = document.getElementById('login');
-    const adminContent = document.getElementById('adminContent');
-    const passwordInput = document.getElementById('password');
-    const tbody = document.getElementById('tableBody');
+// ===== Login =====
+function login() {
+  if(passwordInput.value.trim()==="mpk2025"){
+    loginBox.style.display="none";
+    adminPanel.style.display="flex";
+    loadData();
+  } else { alert("❌ Password salah!"); }
+}
 
-    function login() {
-      const pass = passwordInput.value.trim();
-      if (pass === 'mpk2025') {
-        loginBox.classList.add('hidden');
-        adminContent.classList.remove('hidden');
-        loadData();
-      } else {
-        alert('❌ Password salah!');
-      }
-    }
+// ===== Logout =====
+function logout(){
+  if(confirm("Keluar dari panel admin?")){
+    adminPanel.style.display="none";
+    loginBox.style.display="block";
+    passwordInput.value="";
+  }
+}
 
-    function loadData() {
-      const data = JSON.parse(localStorage.getItem('aspirasi')) || [];
-      tbody.innerHTML = '';
+// ===== Load Data =====
+function loadData(){
+  const data=JSON.parse(localStorage.getItem("aspirasi"))||[];
+  chatList.innerHTML="";
+  if(data.length===0){
+    chatList.innerHTML="<p style='text-align:center;margin-top:30px;color:#E0E7FF;'>Belum ada aspirasi masuk.</p>";
+    return;
+  }
+  data.forEach(d=>{
+    const item=document.createElement("div");
+    item.classList.add("chat-item");
+    item.innerHTML=`<h4>${d.nama} (${d.kelas})</h4><p>${d.jenis} - ${d.status||"Pending"}</p>`;
+    item.onclick=(e)=>showDetail(d.id,e);
+    chatList.appendChild(item);
+  });
+}
 
-      let total = data.length;
-      let approved = data.filter(d => d.status === 'Approved').length;
-      let rejected = data.filter(d => d.status === 'Rejected').length;
-      let pending = data.filter(d => d.status === 'Pending').length;
+// ===== Show Detail =====
+function showDetail(id,event){
+  const data=JSON.parse(localStorage.getItem("aspirasi"))||[];
+  const asp=data.find(a=>a.id===id); if(!asp) return;
+  selectedId=id;
+  document.querySelectorAll(".chat-item").forEach(i=>i.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+  judulAspirasi.textContent=`${asp.nama} - ${asp.kelas}`;
+  detailBody.innerHTML=`
+    <p><b>Jenis:</b> ${asp.jenis}</p>
+    <p><b>Status:</b> ${asp.status||"Pending"}</p>
+    <hr style="margin:10px 0;border:none;border-top:1px solid rgba(255,255,255,0.2);">
+    <p>${asp.isi}</p>`;
+  actionButtons.style.display="block";
+}
 
-      document.getElementById('total').textContent = total;
-      document.getElementById('approved').textContent = approved;
-      document.getElementById('rejected').textContent = rejected;
-      document.getElementById('pending').textContent = pending;
+// ===== Ubah Status =====
+function ubahStatus(status){
+  if(!selectedId) return alert("Pilih aspirasi dulu.");
+  const data=JSON.parse(localStorage.getItem("aspirasi"));
+  const asp=data.find(a=>a.id===selectedId);
+  asp.status=status;
+  localStorage.setItem("aspirasi",JSON.stringify(data));
+  loadData();
+  showDetail(selectedId,document.querySelector(".chat-item.active"));
+}
 
-      data.forEach(d => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td data-label="Nama">${d.nama}</td>
-          <td data-label="Kelas">${d.kelas}</td>
-          <td data-label="Jenis">${d.jenis}</td>
-          <td data-label="Aspirasi">${d.isi}</td>
-          <td data-label="Status">${d.status}</td>
-          <td data-label="Aksi" class="actions">
-            <button class="approve" onclick="ubahStatus(${d.id}, 'Approved')">Setujui</button>
-            <button class="reject" onclick="ubahStatus(${d.id}, 'Rejected')">Tolak</button>
-            <button class="delete" onclick="hapus(${d.id})">Hapus</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+// ===== Hapus =====
+function hapus(){
+  if(!selectedId) return alert("Pilih aspirasi dulu.");
+  if(!confirm("Yakin ingin hapus aspirasi ini?")) return;
+  let data=JSON.parse(localStorage.getItem("aspirasi"));
+  data=data.filter(a=>a.id!==selectedId);
+  localStorage.setItem("aspirasi",JSON.stringify(data));
+  selectedId=null;
+  detailBody.innerHTML="<p class='placeholder'>Klik salah satu aspirasi untuk melihat detailnya.</p>";
+  actionButtons.style.display="none";
+  loadData();
+}
+</script>
 
-    function ubahStatus(id, status) {
-      const data = JSON.parse(localStorage.getItem('aspirasi'));
-      const item = data.find(a => a.id === id);
-      if (item) item.status = status;
-      localStorage.setItem('aspirasi', JSON.stringify(data));
-      loadData();
-    }
-
-    function hapus(id) {
-      let data = JSON.parse(localStorage.getItem('aspirasi'));
-      data = data.filter(a => a.id !== id);
-      localStorage.setItem('aspirasi', JSON.stringify(data));
-      loadData();
-    }
-  </script>
 </body>
 </html>
