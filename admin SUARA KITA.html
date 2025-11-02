@@ -17,17 +17,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px;
+      padding: 30px 15px;
     }
 
     header {
       text-align: center;
       margin-bottom: 25px;
+      padding: 0 10px;
     }
 
     header h1 {
       color: #FACC15;
-      font-size: 2.2em;
+      font-size: 2em;
     }
 
     header p {
@@ -37,18 +38,21 @@
 
     .stats {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       margin: 20px 0;
     }
 
     .stat-box {
       background: rgba(255,255,255,0.15);
       border-radius: 15px;
-      padding: 15px 25px;
+      padding: 15px 20px;
       text-align: center;
       backdrop-filter: blur(8px);
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      min-width: 120px;
+      flex: 1 1 120px;
     }
 
     .stat-box h2 {
@@ -59,6 +63,7 @@
 
     .stat-box p {
       color: #E0E7FF;
+      font-size: 0.9em;
     }
 
     table {
@@ -70,17 +75,21 @@
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
       backdrop-filter: blur(10px);
+      margin-bottom: 20px;
     }
 
     th, td {
-      padding: 12px 15px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.9em;
+      word-break: break-word;
     }
 
     th {
       background-color: rgba(255,255,255,0.15);
       color: #FACC15;
+      font-size: 1em;
     }
 
     tr:hover {
@@ -88,13 +97,14 @@
     }
 
     .actions button {
-      padding: 6px 12px;
+      padding: 6px 10px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin-right: 5px;
+      margin: 3px 0;
       font-weight: 600;
       transition: 0.3s;
+      font-size: 0.85em;
     }
 
     .approve { background-color: #22C55E; color: #fff; }
@@ -106,7 +116,7 @@
     .delete:hover { background-color: #4B5563; }
 
     .back-btn {
-      margin-top: 25px;
+      margin-top: 15px;
       background-color: #FACC15;
       color: #1E3A8A;
       padding: 10px 25px;
@@ -115,6 +125,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: 0.3s;
+      font-size: 0.95em;
     }
 
     .back-btn:hover {
@@ -124,9 +135,9 @@
 
     footer {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 25px;
       color: #E0E7FF;
-      font-size: 0.9em;
+      font-size: 0.85em;
       opacity: 0.8;
     }
 
@@ -139,11 +150,18 @@
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       backdrop-filter: blur(8px);
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .login-box h3 {
+      margin-bottom: 10px;
+      color: #FACC15;
     }
 
     .login-box input {
       padding: 10px;
-      width: 200px;
+      width: 100%;
       border: none;
       border-radius: 10px;
       margin-top: 10px;
@@ -156,7 +174,7 @@
       color: #1E3A8A;
       border: none;
       border-radius: 20px;
-      padding: 8px 20px;
+      padding: 10px 25px;
       cursor: pointer;
       font-weight: 600;
     }
@@ -165,6 +183,49 @@
       background-color: #FFE04D;
     }
 
+    /* RESPONSIVE TABLE */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 10px;
+        background: rgba(255,255,255,0.05);
+      }
+
+      td {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9em;
+        padding: 8px 5px;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #FACC15;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+
+      .actions button {
+        flex: 1 1 30%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -243,12 +304,12 @@
       data.forEach(d => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${d.nama}</td>
-          <td>${d.kelas}</td>
-          <td>${d.jenis}</td>
-          <td>${d.isi}</td>
-          <td>${d.status}</td>
-          <td class="actions">
+          <td data-label="Nama">${d.nama}</td>
+          <td data-label="Kelas">${d.kelas}</td>
+          <td data-label="Jenis">${d.jenis}</td>
+          <td data-label="Aspirasi">${d.isi}</td>
+          <td data-label="Status">${d.status}</td>
+          <td data-label="Aksi" class="actions">
             <button class="approve" onclick="ubahStatus(${d.id}, 'Approved')">Setujui</button>
             <button class="reject" onclick="ubahStatus(${d.id}, 'Rejected')">Tolak</button>
             <button class="delete" onclick="hapus(${d.id})">Hapus</button>
@@ -275,4 +336,3 @@
   </script>
 </body>
 </html>
-
